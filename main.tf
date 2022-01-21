@@ -14,7 +14,7 @@ provider "aws" {
   secret_key = "8YcY4An/nLU11v3KTHPmNeyZyI9g6I0ANeETecYK"
 }
 
-# Define variables
+# Define variable
 variable "cidr_block" {
   #default = "10.0.0.0/16"
   type = string
