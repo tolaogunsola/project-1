@@ -12,5 +12,4 @@
 *.tfvars
 
 provider.tf
-main.tf
 .gitignore
