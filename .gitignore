@@ -12,4 +12,4 @@
 *.tfvars
 
 main.tf
-main.tf
+.gitignore
