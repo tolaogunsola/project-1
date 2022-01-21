@@ -11,5 +11,6 @@
 # Sensitive data
 *.tfvars
 
+provider.tf
 main.tf
 .gitignore

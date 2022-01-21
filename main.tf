@@ -1,20 +1,4 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
-}
-
-# Configure the AWS Provider
-provider "aws" {
-  region     = "us-east-1"
-  access_key = "AKIAYR64MYX7VRIAUCV7"
-  secret_key = "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"
-}
-
-# Define variable
+# Define variables
 variable "cidr_block" {
   #default = "10.0.0.0/16"
   type = string
