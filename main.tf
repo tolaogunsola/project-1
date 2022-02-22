@@ -127,6 +127,7 @@ resource "aws_network_interface" "web-server-nic" {
 # 8. Assign an elastic IP to the network interface created in step 7
 
 resource "aws_eip" "one" {
+  # count    = length(aws_instance.web-server-instance)
   vpc                       = true
   network_interface         = aws_network_interface.web-server-nic.id
   associate_with_private_ip = "10.0.1.50"
@@ -140,7 +141,7 @@ output "server_public_ip" {
 # 9. Create Ubuntu server and install/enable apache2
 
 resource "aws_instance" "web-server-instance" {
-  count = 2
+  # count = 2
   ami               = "ami-08e4e35cccc6189f4"
   instance_type     = "t2.micro"
   availability_zone = "us-east-1a"
@@ -172,11 +173,11 @@ resource "aws_instance" "web-server-instance" {
 
 
 
-output "server_private_ip" {
-  value = aws_instance.web-server-instance.private_ip
+# output "server_private_ip" {
+#   value = aws_instance.web-server-instance.private_ip
 
-}
+# }
 
-output "server_id" {
-  value = aws_instance.web-server-instance.id
-}
+# output "server_id" {
+#   value = aws_instance.web-server-instance.id
+# }
