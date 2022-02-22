@@ -140,6 +140,7 @@ output "server_public_ip" {
 # 9. Create Ubuntu server and install/enable apache2
 
 resource "aws_instance" "web-server-instance" {
+  count = 2
   ami               = "ami-08e4e35cccc6189f4"
   instance_type     = "t2.micro"
   availability_zone = "us-east-1a"
@@ -165,7 +166,7 @@ resource "aws_instance" "web-server-instance" {
   #             sudo bash -c 'echo your very first web server > /var/www/html/index.html'
   #             EOF
   tags = {
-    Name = "web-server"
+    Name = "web-server-${count.index}"
   }
 }
 
