@@ -167,17 +167,18 @@ resource "aws_instance" "web-server-instance" {
   #             sudo bash -c 'echo your very first web server > /var/www/html/index.html'
   #             EOF
   tags = {
-    Name = "web-server-${count.index}"
+    Name = "web-server"
+    # Name = "web-server-${count.index}"
   }
 }
 
 
 
-# output "server_private_ip" {
-#   value = aws_instance.web-server-instance.private_ip
+output "server_private_ip" {
+  value = aws_instance.web-server-instance.private_ip
 
-# }
+}
 
-# output "server_id" {
-#   value = aws_instance.web-server-instance.id
-# }
+output "server_id" {
+  value = aws_instance.web-server-instance.id
+}
