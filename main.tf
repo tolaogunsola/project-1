@@ -10,6 +10,11 @@ variable "subnet_prefix" {
 
 }
 
+variable "github_repo" {
+  description = "GitHub repository URL"
+  type        = string
+  default     = "https://github.com/tolaogunsola/project-1"
+}
 
 # 1. Create vpc
 
@@ -17,6 +22,7 @@ resource "aws_vpc" "prod-vpc" {
   cidr_block = var.cidr_block
   tags = {
     Name = "production"
+    Repo = var.github_repo
   }
 }
 
@@ -24,8 +30,9 @@ resource "aws_vpc" "prod-vpc" {
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.prod-vpc.id
-
-
+  tags = {
+    Repo = var.github_repo
+  }
 }
 # 3. Create Custom Route Table
 
@@ -44,6 +51,7 @@ resource "aws_route_table" "prod-route-table" {
 
   tags = {
     Name = "Prod"
+    Repo = var.github_repo
   }
 }
 
@@ -56,6 +64,7 @@ resource "aws_subnet" "subnet-1" {
 
   tags = {
     Name = var.subnet_prefix[0].name
+    Repo = var.github_repo
   }
 }
 
@@ -66,6 +75,7 @@ resource "aws_subnet" "subnet-2" {
 
   tags = {
     Name = var.subnet_prefix[1].name
+    Repo = var.github_repo
   }
 }
 
@@ -113,6 +123,7 @@ resource "aws_security_group" "allow_web" {
 
   tags = {
     Name = "allow_web"
+    Repo = var.github_repo
   }
 }
 
@@ -122,7 +133,9 @@ resource "aws_network_interface" "web-server-nic" {
   subnet_id       = aws_subnet.subnet-1.id
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.allow_web.id]
-
+  tags = {
+    Repo = var.github_repo
+  }
 }
 # 8. Assign an elastic IP to the network interface created in step 7
 
@@ -132,6 +145,9 @@ resource "aws_eip" "one" {
   network_interface         = aws_network_interface.web-server-nic.id
   associate_with_private_ip = "10.0.1.50"
   depends_on                = [aws_internet_gateway.gw]
+  tags = {
+    Repo = var.github_repo
+  }
 }
 
 output "server_public_ip" {
@@ -168,7 +184,7 @@ resource "aws_instance" "web-server-instance" {
   #             EOF
   tags = {
     Name = "web-server"
-    # Name = "web-server-${count.index}"
+    Repo = var.github_repo
   }
 }
 
